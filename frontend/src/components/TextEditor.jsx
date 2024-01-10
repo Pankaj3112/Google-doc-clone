@@ -24,7 +24,7 @@ const TextEditor = () => {
 
   //creating a socket connection
   useEffect(() => {
-    const s = io("http://localhost:3001");
+    const s = io(import.meta.env.VITE_WS_SERVER_URL);
 
     setSocket(s);
 

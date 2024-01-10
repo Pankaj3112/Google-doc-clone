@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
+require("dotenv").config();
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/google-docs-clone")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected successfully"));
 
 const DocumentSchema = new Schema({
