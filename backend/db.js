@@ -4,7 +4,7 @@ require("dotenv").config();
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected successfully"));
+  .then(() => console.log("MongoDB connected successfully --> ", process.env.MONGO_URI));
 
 const DocumentSchema = new Schema({
   _id: String,

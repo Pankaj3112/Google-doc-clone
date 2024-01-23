@@ -38,25 +38,24 @@ const TextEditor = () => {
     if (socket == null || quill == null) return;
 
     socket.on("load-document", (document) => {
-        quill.setContents(document);
-        quill.enable();
+      quill.setContents(document);
+      quill.enable();
     });
 
     socket.emit("get-document", documentId);
-
   }, [socket, quill, documentId]);
 
   //saving the document to the server
   useEffect(() => {
-	if (socket == null || quill == null) return;
+    if (socket == null || quill == null) return;
 
-	const interval = setInterval(() => {
-	  socket.emit("save-document", quill.getContents());
-	}, 2000);
+    const interval = setInterval(() => {
+      socket.emit("save-document", quill.getContents());
+    }, 2000);
 
-	return () => {
-	  clearInterval(interval);
-	};
+    return () => {
+      clearInterval(interval);
+    };
   }, [socket, quill]);
 
   //initializing the quill editor
@@ -73,6 +72,7 @@ const TextEditor = () => {
     });
 
     q.disable();
+    q.setText("Loading...");
     setQuill(q);
   }, []);
 
