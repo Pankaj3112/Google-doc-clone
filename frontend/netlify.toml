@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/document/:slug"
+  to = "/document/:slug"
+  status = 200
+  force = true
