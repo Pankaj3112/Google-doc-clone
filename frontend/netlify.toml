@@ -1,5 +1,4 @@
 [[redirects]]
-  from = "/document/:slug"
-  to = "/document/:slug"
+  from = "/*"
+  to = "/"
   status = 200
-  force = true
