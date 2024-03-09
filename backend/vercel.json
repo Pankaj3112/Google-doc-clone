@@ -1,8 +1,13 @@
 {
-	"rewrites": [
-	  {
-		"source": "/(.*)",
-		"destination": "/api"
-	  }
-	]
-  }
+  "version": 2,
+  "routes": [
+    {
+      "src": "/socket.io/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ]
+}

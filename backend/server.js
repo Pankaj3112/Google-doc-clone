@@ -36,5 +36,4 @@ async function findOrCreateDocument(id) {
   return await Document.create({ _id: id, data: "" });
 }
 
-
 export default io;
