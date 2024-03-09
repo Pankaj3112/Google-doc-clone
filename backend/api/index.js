@@ -1,3 +1,3 @@
-import io from "../server";
+import server from "../server";
 
-export default io;
+export default server;

@@ -1,25 +1,28 @@
 require("dotenv").config();
 const { Document } = require("./db");
+const io = require("socket.io");
 
-const io = require("socket.io")(process.env.PORT, {
+const server = require("http").createServer();
+
+const socketServer = io(server, {
   cors: {
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
   },
 });
 
-io.on("connection", (socket) => {
-//   console.log("New user connected - ", socket.id);
+socketServer.on("connection", (socket) => {
+  //   console.log("New user connected - ", socket.id);
 
   socket.on("get-document", async (documentId) => {
     const document = await findOrCreateDocument(documentId);
-	
+
     socket.join(documentId);
     socket.emit("load-document", document.data);
 
     socket.on("send-changes", (delta) => {
       socket.broadcast.to(documentId).emit("receive-changes", delta);
-	  console.log(delta);
+      console.log(delta);
     });
 
     socket.on("save-document", async (data) => {
@@ -36,4 +39,4 @@ async function findOrCreateDocument(id) {
   return await Document.create({ _id: id, data: "" });
 }
 
-export default io;
+export default server;
