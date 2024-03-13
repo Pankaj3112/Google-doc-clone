@@ -1,21 +1,17 @@
-
 export default async (event, context) => {
   const backendUrl = "http://3.27.164.200:8000"; // Your backend server URL
-  const proxyUrl = `${backendUrl}${event.path}`; // Proxy the same path
 
-  const response = await fetch(proxyUrl, {
-    method: event.httpMethod,
-    headers: event.headers,
-    body: event.body,
-  });
+  const url = new URL(event.url);
+  const path = url.pathname.replace(/^\/\.netlify\/functions\/[^/]+/, "");
 
-  const data = await response.json();
+  const proxyUrl = `${backendUrl}${path}`;
 
-  return {
-    statusCode: response.status,
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+  try {
+    const response = await fetch(proxyUrl);
+	const data = await response.json();
+	return Response.json(data);
+  } catch (error) {
+	console.log(error)
+	return Response.json({});
+  }
 };
