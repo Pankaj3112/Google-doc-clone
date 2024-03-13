@@ -3,8 +3,7 @@ const { Document } = require("./db");
 
 const io = require("socket.io")(process.env.PORT, {
   cors: {
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST"],
+    origin: "*",
   },
 });
 
