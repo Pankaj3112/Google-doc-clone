@@ -1,11 +1,17 @@
 require("dotenv").config();
 const { Document } = require("./db");
+const socketIo = require("socket.io");
+const express = require("express");
 
-const io = require("socket.io")(process.env.PORT, {
+const app = express();
+const server = require("http").Server(app); // Use http instead of https
+
+const io = socketIo(server, {
   cors: {
     origin: "*",
   },
 });
+
 
 io.on("connection", (socket) => {
 //   console.log("New user connected - ", socket.id);
@@ -34,3 +40,9 @@ async function findOrCreateDocument(id) {
   if (document) return document;
   return await Document.create({ _id: id, data: "" });
 }
+
+
+const PORT = process.env.PORT;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
